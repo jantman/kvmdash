@@ -1,0 +1,5 @@
+[run]
+branch = True
+omit = lib/*
+       kvmdash/tests/*
+       setup.py

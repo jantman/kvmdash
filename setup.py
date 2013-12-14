@@ -1,6 +1,6 @@
 from setuptools import setup, find_packages
 
-with open('README.md') as file:
+with open('README.rst') as file:
     long_description = file.read()
 
 pyver_requires = []
@@ -16,7 +16,6 @@ setup(
     author='Jason Antman',
     author_email='jason@jasonantman.com',
     packages=find_packages(),
-    packages=['kvmdash', 'kvmdash.tests'],
     url='http://github.com/jantman/kvmdash/',
     license='AGPLv3+',
     description='Dashboard for standalone libvirt/kvm host status',
