@@ -1,16 +1,14 @@
 from flask import Flask
+from webapp import kvmdash
 import pytest
 
 def test_app():
-    app = Flask(__name__)
-    app.testing = True
-
-    @app.route("/")
-    def hello():
-        return "Hello World!"
+    #kvmdash = Flask(__name__)
+    #from webapp import views
+    kvmdash.testing = True
 
     # app.run() # this actually works here...
-    with app.test_client() as client:
+    with kvmdash.test_client() as client:
         response = client.get("/")
         assert response.status_code == 200
         assert response.data == "Hello World!"

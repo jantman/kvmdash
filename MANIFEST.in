@@ -1,0 +1,5 @@
+include README.rst
+include requirements.txt
+recursive-include kvmdash/templates *
+recursive-include kvmdash/static *
+recursive-include kvmdash/contrib *
