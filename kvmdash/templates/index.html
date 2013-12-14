@@ -5,11 +5,45 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
 <title>{{title}}</title>
-<link rel="stylesheet" type="text/css" href="XXXX.css" />
+<!-- <link rel="stylesheet" type="text/css" href="static/DataTables/media/css/jquery.dataTables.css" /> -->
+<style type="text/css" title="currentStyle">
+    @import "static/DataTables/media/css/demo_table.css";
+</style>
+
+<script type="text/javascript" src="static/js/jquery.js"></script>
+<script type="text/javascript" src="static/DataTables/media/js/jquery.dataTables.min.js"></script>
+
+<script type="text/javascript">
+$(document).ready(function(){
+    $('#kvmhosts').dataTable( {
+    "bPaginate": false
+    });
+});
+</script>
+
 </head>
 
 <body>
-Hello, World.
+
+<h1>KVM Hosts</h1>
+<table id="kvmhosts" class="display">
+  <thead>
+    <tr>
+      <th>Hostname</th>
+      <th>Type</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for host in hosts %}
+    <tr>
+      <td>{{ host }}</td>
+      <td>bar</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+<h1>KVM Guests</h1>
 
 </body>
 
