@@ -10,10 +10,9 @@ def test_app():
         return "Hello World!"
 
     # app.run() # this actually works here...
-    client = app.test_client()
-    response = client.get("/")
-    assert response.status_code == 200
-    assert response.data == "Hello World!"
-    print response.headers
-    
-    assert False
+    with app.test_client() as client:
+        response = client.get("/")
+        assert response.status_code == 200
+        assert response.data == "Hello World!"
+        print response.headers
+        assert False
