@@ -1,10 +1,10 @@
 from flask import Flask
-from webapp import kvmdash
+from kvmdash import kvmdash
 import pytest
 
 def test_app():
     #kvmdash = Flask(__name__)
-    #from webapp import views
+    #from kvmdash import views
     kvmdash.testing = True
 
     # app.run() # this actually works here...

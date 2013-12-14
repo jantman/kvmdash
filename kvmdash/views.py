@@ -1,4 +1,4 @@
-from webapp import kvmdash
+from kvmdash import kvmdash
 
 #url_for('static', filename='favicon.ico')
 

@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 
-from webapp import kvmdash
+from kvmdash import kvmdash
 
 if __name__ == "__main__":
     kvmdash.debug = True
