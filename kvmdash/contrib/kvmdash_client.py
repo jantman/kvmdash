@@ -61,9 +61,9 @@ def parse_domain_xml(x):
 
     ret['type'] = xml_get(ctx, "/domain/@type")
     memory = int(xml_get(ctx, "/domain/memory"))
-    #memory_units = xml_get(ctx, "/domain/memory/@unit")
-    #if memory_units == 'KiB':
-    #    memory = memory * 1024
+    memory_units = xml_get(ctx, "/domain/memory/@unit")
+    if memory_units == 'KiB':
+        memory = memory * 1024
     ret['memory_bytes'] = memory
     vcpu = xml_get(ctx, "/domain/vcpu")
     ret['vcpus'] = int(vcpu)
