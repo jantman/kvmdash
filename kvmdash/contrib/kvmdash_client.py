@@ -111,7 +111,7 @@ def get_host_info(conn):
     ret['hostname'] = conn.getHostname()
     (model, memory, cpus, mhz, nodes, sockets, cores, threads) = conn.getInfo() # http://libvirt.org/html/libvirt-libvirt.html#virNodeInfo
     ret['maxvcpus'] = conn.getMaxVcpus('qemu')
-    ret['memory_bytes'] = int(memory) * 1024
+    ret['memory_bytes'] = int(memory) * 1024 * 1024 # want bytes
     return ret
 
 def run_command(cmd):
