@@ -8,6 +8,19 @@
 <!-- <link rel="stylesheet" type="text/css" href="static/DataTables/media/css/jquery.dataTables.css" /> -->
 <style type="text/css" title="currentStyle">
     @import "static/DataTables/media/css/demo_table.css";
+    .olddata { background-color: #ffcccc !important; }
+
+    .running {
+        background-position: 0 0;
+        background-size: auto auto;
+        background-image: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHg9IjBweCIgeT0iMHB4Ij4NCjxwYXRoIGZpbGw9IiMwRDgxMzYiIGQ9Ik01LDBDMi4yMzksMCwwLDIuMjQsMCw1YzAsMi43NjIsMi4yMzksNSw1LDVjMi43NjIsMCw1LTIuMjM4LDUtNUMxMCwyLjI0LDcuNzYyLDAsNSwwIE00LjUzNSw3LjgyNA0KCUwyLjEzOSw1LjQyNUwzLjY1LDMuOTE0bDAuODg1LDAuODg1bDIuMDQ0LTIuMDQ1bDEuNTEsMS41MTNMNC41MzUsNy44MjR6Ii8+DQo8L3N2Zz4NCg==");
+    }
+
+    .notrunning {
+        background-position: 0 0;
+        background-size: auto auto;
+        background-image: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHg9IjBweCIgeT0iMHB4Ij4NCjxwYXRoIGZpbGw9IiNDRDE4MUIiIGQ9Ik0xLjQ2MywxLjQ2M2MtMS45NTEsMS45NTItMS45NTEsNS4xMTksMC4wMDEsNy4wNzJjMS45NTQsMS45NTMsNS4xMiwxLjk1Myw3LjA3MSwwDQoJYzEuOTUzLTEuOTUxLDEuOTUzLTUuMTE4LDAtNy4wNzFDNi41ODItMC40ODgsMy40MTctMC40ODgsMS40NjMsMS40NjMgTTcuNDQ5LDMuNzczTDYuMjI2LDVsMS4yMjQsMS4yMjZMNi4yMjYsNy40NDlMNSw2LjIyNg0KCUwzLjc3Myw3LjQ0OUwyLjU1LDYuMjI2TDMuNzczLDVMMi41NSwzLjc3M2wxLjIyNS0xLjIyNUw1LDMuNzczbDEuMjI2LTEuMjI1TDcuNDQ5LDMuNzczeiIvPg0KPC9zdmc+DQo=");
+    }
 </style>
 
 <script type="text/javascript" src="static/js/jquery.js"></script>
@@ -16,6 +29,12 @@
 <script type="text/javascript">
 $(document).ready(function(){
     $('#kvmhosts').dataTable( {
+    "bPaginate": false
+    });
+});
+
+$(document).ready(function(){
+    $('#kvmguests').dataTable( {
     "bPaginate": false
     });
 });

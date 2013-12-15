@@ -13,9 +13,9 @@
     {% for hkey in hosts|dictsort %}
     <tr>
       {% if hkey[1]['updated_ts'] < ( now - age_threshold ) %}
-      <td>{{ hkey[0] }} (old)</td>
+      <td class="olddata">{{ hkey[0] }} ( {{ hkey[1]['updated_ts']|formatage }} old )</td>
       {% else %}
-      <td>{{ hkey[0] }} - {{ hkey[1]['updated_ts'] }} {{ now }} {{ age_threshold }}</td>
+      <td>{{ hkey[0] }}</td>
       {% endif %}
       <td>{{ hkey[1]['data']['num_guests'] }}</td>
       <td>{{ hkey[1]['data']['unallocated_vcpus'] }}</td>

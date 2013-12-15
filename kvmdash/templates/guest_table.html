@@ -1,1 +1,37 @@
 <h1>KVM Guests</h1>
+<table id="kvmguests" class="display">
+  <thead>
+    <tr>
+      <th>Guest Name</th>
+      <th>Host (DomID)</th>
+      <th>State</th>
+      <th>vCPUs</th>
+      <th>Max Memory</th>
+      <th>Bridge MAC</th>
+      <th>Bridge Driver</th>
+      <th>UUID</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for guest in guests|dictsort %}
+    <tr>
+      {% if guest[1]['updated_ts'] < ( now - age_threshold ) %}
+      <td class="olddata">{{ guest[0] }} ( {{ guest[1]['updated_ts']|formatage }} old )</td>
+      {% else %}
+      <td>{{ guest[0] }}</td>
+      {% endif %}
+      <td>{{ guest[1]['host'] }} ({{ guest[1]['data']['ID'] }})</td>
+      {% if guest[1]['data']['state'] == "running" %}
+      <td class="running">{{ guest[1]['data']['state'] }}</td>
+      {% else %}
+      <td class="notrunning">{{ guest[1]['data']['state'] }}</td>
+      {% endif %}
+      <td>{{ guest[1]['data']['vcpus'] }}</td>
+      <td>{{ guest[1]['data']['memory_bytes']|filesizeformat(True) }}</td>
+      <td>{{ guest[1]['data']['bridges'][0]['mac'] }}</td>
+      <td>{{ guest[1]['data']['bridges'][0]['model'] }}</td>
+      <td>{{ guest[1]['data']['UUID'] }}</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>

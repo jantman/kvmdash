@@ -26,4 +26,5 @@ def index():
                            title = 'kvmdash',
                            now = int(time.time()),
                            age_threshold = AGE_THRESHOLD_SEC,
-                           hosts = hosts)
+                           hosts = hosts,
+                           guests = guests)
