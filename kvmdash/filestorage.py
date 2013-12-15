@@ -79,6 +79,24 @@ class FileStorage():
             ret[hm.group(1)] = foo
         return ret
 
+    def store_host(self, hostname, data):
+        """
+        Store a host's data, from the client script.
+
+        :param hostname: the hostname
+        :type hostname: string
+        :param data: the dict of data to store
+        :type data: dict
+        :rtype: boolean
+        :returns: True on success, False on failure
+        """
+        fname = "host_%s.json" % hostname
+        path = os.path.join(self._base_path, fname)
+        j = anyjson.serialize(data)
+        with open(path, 'w') as fh:
+            fh.write(j)
+        return True
+
     def list_guests(self):
         """
         Return a list of all KVM guest names.

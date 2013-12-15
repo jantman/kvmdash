@@ -1,4 +1,4 @@
-from flask import url_for, render_template, g
+from flask import render_template
 from kvmdash import kvmdash
 from config import STORAGE_CLASS, AGE_THRESHOLD_SEC
 from storage import get_storage_api
