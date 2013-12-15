@@ -90,9 +90,29 @@ def get_domains(conn):
     """
     Takes a libvirt connection object,
     returns a list of all domains, each element
-    being a dict with items "name", "ID", "UUID", 
+    being a dict with items "name", "ID", "UUID", "state"
+
+    This method first tries to use the listAllDomains (virConnectListAllDomains)
+    method, which was introduced in libvirt 0.9.13, as a workaround to the inherent
+    race condition when calling listDefinedDomains (virConnectListDefinedDomains)
+    and listDomains (virConnectListDomains) sequentially. If this raises an error,
+    we fall back to the potentially racey method.
     """
-    domains = conn.listAllDomains(ALL_OPTS)
+    try:
+        domains = conn.listAllDomains(ALL_OPTS)
+    except libvirt.libvirtError:
+        # ok, we're < 0.9.13 :(
+        # really ugly, we have a function that lists running domains by ID,
+        # and a function that lists stopped domains by name. ugh.
+        domains = []
+        names = conn.listDefinedDomains()
+        for n in names:
+            foo = conn.lookupByName(n)
+            domains.append(foo)
+        IDs = conn.listDomainsID()
+        for i in IDs:
+            foo = conn.lookupByID(i)
+            domains.append(foo)
     ret = []
     for d in domains:
         foo = {}
@@ -201,5 +221,5 @@ for h in hosts:
         #print("{host},{name},{ID},{state},{UUID}".format(host=h, name=d['name'], ID=d['ID'], UUID=d['UUID'], state=d['state']))
         foo = {'type': 'guest', 'name': d['name'], 'uuid': d['UUID'], 'data': d, 'host': host_info['hostname'], 'updated_ts': ts}
         print to_json(foo)
-        with open("guest_%s.json" % d['name'], 'w') as fh:
+        with open("host_%s_guest_%s.json" % (host_info['hostname'], d['name']), 'w') as fh:
             fh.write(to_json(foo))
