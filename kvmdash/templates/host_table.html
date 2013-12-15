@@ -1,0 +1,27 @@
+<h1>KVM Hosts</h1>
+<table id="kvmhosts" class="display">
+  <thead>
+    <tr>
+      <th>Hostname</th>
+      <th># of Guests</th>
+      <th>vCPUs Available</th>
+      <th>Memory Available</th>
+      <th>Local Disk Free</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for hkey in hosts|dictsort %}
+    <tr>
+      {% if hkey[1]['updated_ts'] < ( now - age_threshold ) %}
+      <td>{{ hkey[0] }} (old)</td>
+      {% else %}
+      <td>{{ hkey[0] }} - {{ hkey[1]['updated_ts'] }} {{ now }} {{ age_threshold }}</td>
+      {% endif %}
+      <td>{{ hkey[1]['data']['num_guests'] }}</td>
+      <td>{{ hkey[1]['data']['unallocated_vcpus'] }}</td>
+      <td>{{ hkey[1]['data']['unallocated_memory_bytes']|filesizeformat(True) }}</td>
+      <td>{{ hkey[1]['data']['df_bytes']|filesizeformat(True) }}</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>

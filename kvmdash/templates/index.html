@@ -25,25 +25,9 @@ $(document).ready(function(){
 
 <body>
 
-<h1>KVM Hosts</h1>
-<table id="kvmhosts" class="display">
-  <thead>
-    <tr>
-      <th>Hostname</th>
-      <th>Type</th>
-    </tr>
-  </thead>
-  <tbody>
-    {% for host in hosts %}
-    <tr>
-      <td>{{ host }}</td>
-      <td>bar</td>
-    </tr>
-    {% endfor %}
-  </tbody>
-</table>
+{% include 'host_table.html' %}
 
-<h1>KVM Guests</h1>
+{% include 'guest_table.html' %}
 
 </body>
 
