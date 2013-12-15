@@ -63,7 +63,7 @@ def parse_domain_xml(x):
     #    memory = memory * 1024
     ret['memory_bytes'] = memory
     vcpu = xml_get(ctx, "/domain/vcpu")
-    ret['vcpus'] = vcpu
+    ret['vcpus'] = int(vcpu)
 
     disk_files = []
     bridges = []
