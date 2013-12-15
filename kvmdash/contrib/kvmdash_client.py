@@ -186,7 +186,7 @@ for h in hosts:
 
     for d in doms:
         #print("{host},{name},{ID},{state},{UUID}".format(host=h, name=d['name'], ID=d['ID'], UUID=d['UUID'], state=d['state']))
-        foo = {'type': 'guest', 'name': d['name'], 'uuid': d['UUID'], 'data': d}
+        foo = {'type': 'guest', 'name': d['name'], 'uuid': d['UUID'], 'data': d, 'host': host_info['hostname']}
         print to_json(foo)
         with open("guest_%s.json" % d['name'], 'w') as fh:
             fh.write(to_json(foo))
