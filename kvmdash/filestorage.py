@@ -14,6 +14,9 @@ class FileStorage():
 
     _base_path = None
 
+    _host_file_re = re.compile(r'^host_(.+)\.json$')
+    _guest_file_re = re.compile(r'^host_.+_guest_(.+)\.json$')
+
     def __init__(self):
         """
         base_path - base abs FS path to storage dir
@@ -25,15 +28,14 @@ class FileStorage():
         Return a list of all KVM host names.
         """
         ret = []
-        file_re = re.compile(r'host_(.+).json')
         for f in os.listdir(self._base_path):
             p = os.path.join(self._base_path, f)
             if not os.path.isfile(p):
                 continue
-            m = file_re.match(f)
-            if m is None:
-                continue
-            ret.append(m.group(1))
+            hm = self._host_file_re.match(f)
+            gm = self._guest_file_re.match(f)
+            if hm is not None and gm is None:
+                ret.append(hm.group(1))
         return ret
 
     def get_host(self, name):
@@ -61,20 +63,20 @@ class FileStorage():
         hostname -> dict of data
         """
         ret = {}
-        file_re = re.compile(r'host_(.+).json')
         for f in os.listdir(self._base_path):
             p = os.path.join(self._base_path, f)
             if not os.path.isfile(p):
                 continue
-            m = file_re.match(f)
-            if m is None:
+            hm = self._host_file_re.match(f)
+            gm = self._guest_file_re.match(f)
+            if gm is not None or hm is None:
                 continue
             foo = None
             raw = None
             with open(p, 'r') as fh:
                 raw = fh.read()
                 foo = anyjson.deserialize(raw)
-            ret[m.group(1)] = foo
+            ret[hm.group(1)] = foo
         return ret
 
     def list_guests(self):
@@ -87,10 +89,9 @@ class FileStorage():
             p = os.path.join(self._base_path, f)
             if not os.path.isfile(p):
                 continue
-            m = file_re.match(f)
-            if m is None:
-                continue
-            ret.append(m.group(1))
+            gm = self._guest_file_re.match(f)
+            if gm is not None:
+                ret.append(gm.group(1))
         return ret
 
     def get_guest(self, domname):
@@ -124,12 +125,12 @@ class FileStorage():
             p = os.path.join(self._base_path, f)
             if not os.path.isfile(p):
                 continue
-            m = file_re.match(f)
-            if m is None:
+            gm = self._guest_file_re.match(f)
+            if gm is None:
                 continue
             foo = None
             with open(p, 'r') as fh:
                 raw = fh.read()
             foo = anyjson.deserialize(raw)
-            ret[m.group(1)] = foo
+            ret[gm.group(1)] = foo
         return ret
