@@ -23,6 +23,8 @@ else:
     print("USAGE: test_libvirt.py <hostname> <...>")
     sys.exit(1)
 
+VERBOSE = False
+
 DOM_STATES = {
     libvirt.VIR_DOMAIN_NOSTATE: 'no state',
     libvirt.VIR_DOMAIN_RUNNING: 'running',
@@ -139,7 +141,11 @@ def get_disk_free(image_paths, hostname=None):
     :param hostname: hostname of remote host, or None for localhost
     :type hostname: string
     """
+    if len(image_paths) == 0:
+        image_paths = ['/var/lib/libvirt']
     cmd = "df -lP -B 1 %s | grep -v '^Filesystem' | sort | uniq" % (" ".join(image_paths))
+    if VERBOSE:
+        print("running command: %s" % cmd)
     if hostname is not None:
         cmd = "ssh %s 'df -lP -B 1 %s' | grep -v '^Filesystem' | sort | uniq" % (hostname, " ".join(image_paths))
     total_avail = 0
@@ -155,6 +161,10 @@ hosts = sys.argv
 hosts.pop(0)
 
 for h in hosts:
+    if h == "-v" or h == "--verbose":
+        VERBOSE = True
+        continue
+
     uri = "qemu+ssh://%s/system" % h
 
     try:
