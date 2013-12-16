@@ -17,3 +17,5 @@ In addition, the project will include some supplemental parts such as:
 * puppet module to install and run the web app and client
 * puppet/facter facts to leverage the web app API to determine a guest's
 current physical host
+
+The client application (data collector) is `kvmdashclient <http://github.com/jantman/kvmdashclient`_
